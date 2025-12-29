@@ -8,6 +8,7 @@ node_modules/
 out/
 build/
 dist/
+target/
 
 # Database
 *.db
@@ -40,5 +41,4 @@ next-env.d.ts
 .vscode/
 *.swp
 *.swo
-
 

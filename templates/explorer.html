@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TailwindSQL - Database Explorer</title>
+    <meta name="description" content="TailwindSQL database explorer." />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body class="gradient-bg grid-pattern min-h-screen">
+    <main class="min-h-screen py-8 sm:py-12 md:py-16 px-4 sm:px-6">
+      <div class="max-w-6xl mx-auto">
+        <header class="text-center mb-10">
+          <h1 class="text-3xl sm:text-4xl font-bold mb-3 bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 text-transparent bg-clip-text">Database Explorer</h1>
+          <p class="text-sm sm:text-base text-[var(--text-secondary)]">
+            Browse tables, columns, and sample rows.
+          </p>
+        </header>
+
+        <div id="explorer-root" class="glow-card p-4 sm:p-6"></div>
+
+        <div class="text-center mt-6">
+          <a href="/" class="text-[var(--accent-cyan)] hover:underline">Back to TailwindSQL</a>
+        </div>
+      </div>
+    </main>
+    <script src="/static/explorer.js" defer></script>
+  </body>
+</html>

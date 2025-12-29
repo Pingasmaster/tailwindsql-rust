@@ -1,33 +1,31 @@
-# TailwindSQL 🎨
+# TailwindSQL
 
-> Like TailwindCSS, but for SQL queries in React Server Components.
-
-[![GitHub](https://img.shields.io/badge/GitHub-View%20on%20GitHub-blue?logo=github)](https://github.com/mmarinovic/tailwindsql)
+> Like TailwindCSS, but for SQL queries - now rewritten in Rust.
 
 ## What is this?
 
-TailwindSQL lets you write SQL queries using Tailwind-style class names. Just use `className` to query your database directly in React Server Components!
+TailwindSQL lets you write SQL queries using Tailwind-style class names. It ships as a Rust web app with a live playground, examples, and a database explorer.
 
-```jsx
-// Fetch and render a user's name
+```html
+<!-- Fetch and render a user's name -->
 <DB className="db-users-name-where-id-1" />
-// Renders: "Ada Lovelace"
+<!-- Renders: "Ada Lovelace" -->
 
-// Render products as a list
+<!-- Render products as a list -->
 <DB className="db-products-title-limit-5" as="ul" />
-// Renders: <ul><li>Mechanical Keyboard</li>...</ul>
 
-// Order by price and show as table
+<!-- Order by price and show as table -->
 <DB className="db-products-orderby-price-desc" as="table" />
 ```
 
 ## Features
 
-- 🎨 **Tailwind-style syntax** - Write SQL queries using familiar class names
-- ⚡ **React Server Components** - Zero client-side JavaScript for queries
-- 🔒 **SQLite** - Built on better-sqlite3 for fast, local database access
-- 🎯 **Zero Runtime** - Queries are parsed and executed at build/render time
-- 🎭 **Multiple Render Modes** - Render as text, lists, tables, or JSON
+- Tailwind-style query syntax
+- Rust + Axum server
+- SQLite (via rusqlite)
+- Interactive playground with live results
+- Multiple render modes (text, list, table, JSON)
+- Database explorer UI
 
 ## Syntax
 
@@ -49,74 +47,47 @@ db-{table}-{column}-where-{field}-{value}-limit-{n}-orderby-{field}-{asc|desc}
 
 ### Prerequisites
 
-- Node.js 18+
-- npm or yarn
+- Rust (stable toolchain)
 
-### Installation
+### Run locally
 
 ```bash
-# Clone the repository
-git clone https://github.com/mmarinovic/tailwindsql.git
-cd tailwindsql
-
-# Install dependencies
-npm install
-
 # Seed the database with demo data
-npm run seed
+cargo run --bin seed
 
-# Start the development server
-npm run dev
+# Start the server
+cargo run
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see the demo and interactive playground!
+Open http://localhost:3000 for the playground and examples.
+Open http://localhost:3000/explorer for the database explorer.
 
 ## How It Works
 
-1. **Parser** (`src/lib/parser.ts`) - Parses class names into query configurations
-2. **Query Builder** (`src/lib/query-builder.ts`) - Transforms configs into safe SQL queries
-3. **DB Component** (`src/components/DB.tsx`) - React Server Component that executes queries and renders results
-
-## Render Modes
-
-The `as` prop controls how results are rendered:
-
-| Value | Description |
-|-------|-------------|
-| `span` | Inline text (default) |
-| `div` | Block element |
-| `ul` | Unordered list |
-| `ol` | Ordered list |
-| `table` | HTML table |
-| `json` | JSON code block |
+1. Parser (`src/parser.rs`) - Parses Tailwind-style class names into query configs
+2. Query Builder (`src/query_builder.rs`) - Builds parameterized SQL safely
+3. Web UI (`templates/` + `static/`) - Renders the landing page and playground
+4. API (`/api/query`, `/api/schema`) - Powers the playground and explorer
 
 ## Project Structure
 
 ```
 tailwindsql/
-├── src/
-│   ├── app/              # Next.js app directory
-│   │   ├── page.tsx      # Landing page
-│   │   └── api/          # API routes
-│   ├── components/        # React components
-│   │   ├── DB.tsx        # Main DB component
-│   │   ├── Example.tsx   # Example components
-│   │   └── Playground.tsx # Interactive playground
-│   └── lib/              # Core logic
-│       ├── parser.ts     # Class name parser
-│       ├── query-builder.ts # SQL query builder
-│       └── db.ts         # Database connection
-└── README.md
+- src/
+  - main.rs          # Axum server
+  - parser.rs        # Class name parser
+  - query_builder.rs # SQL query builder
+  - db.rs            # SQLite setup + seeding
+  - render.rs        # HTML rendering helpers
+- static/            # CSS + JS assets
+- templates/         # HTML templates
+- README.md
 ```
 
 ## Why?
 
-This project was built to explore css-driven database queries.
+This project was built to explore CSS-driven database queries - now with a Rust backend.
 
 ## License
 
-MIT - Do whatever you want with it (except deploy to production 😅)
-
----
-
-Built with 💜 using Next.js, SQLite, and questionable decisions
+MIT
